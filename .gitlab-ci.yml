@@ -11,4 +11,4 @@ build website:
 
   artifacts:
     paths:
-      -./public
+      - ".\\public"
