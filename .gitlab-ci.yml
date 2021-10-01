@@ -1,5 +1,9 @@
 build website:
   script: 
-    - npm install
-    - npm install -g gatsby-cli
-    - gatsby build
+    - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
+    - SET NODE_TLS_REJECT_UNAUTHORIZED=0
+    - call npm config set strict-ssl=false
+    - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
+    - call npm install
+    - call npm install -g gatsby-cli
+    - call gatsby build
