@@ -8,3 +8,7 @@ build website:
     - call npm install
     - call npm install -g gatsby-cli
     - gatsby build
+
+  artifacts:
+    paths:
+      -./public
