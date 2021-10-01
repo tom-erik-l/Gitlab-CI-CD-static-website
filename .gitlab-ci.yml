@@ -6,4 +6,4 @@ build website:
     - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
     - call npm install
     - call npm install -g gatsby-cli
-    - call gatsby build
+    - gatsby build
