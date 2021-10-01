@@ -1,5 +1,6 @@
 build website:
   script: 
+    - whoami
     - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
     - SET NODE_TLS_REJECT_UNAUTHORIZED=0
     - call npm config set strict-ssl=false
