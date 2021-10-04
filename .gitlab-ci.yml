@@ -16,6 +16,8 @@ build website:
   artifacts:
     paths:
       - ".\\public"
+      - ".\\.cache"
+      - ".\\node_modules"
 
 test artifact:
   stage: test 
@@ -25,12 +27,6 @@ test artifact:
 test website:
   stage: test
   script:
-    - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
-    - SET NODE_TLS_REJECT_UNAUTHORIZED=0
-    - call npm config set strict-ssl=false
-    - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
-    - call npm install
-    - call npm install -g gatsby-cli
     - gatsby serve &
     - sleep 10
     - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
