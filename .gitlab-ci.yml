@@ -32,6 +32,6 @@ test website:
     - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
     - call npm install
     - call npm install -g gatsby-cli
-    - gatsby serve --port 9001 &
+    - call gatsby serve --port 9001 &
     - sleep 10
     - curl "http://localhost:9000" | tac | tac | grep -q "Gatsby"
