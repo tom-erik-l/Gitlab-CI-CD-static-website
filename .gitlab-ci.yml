@@ -24,18 +24,18 @@ test artifact:
   script:
     - grep -q "Gatsby" .\\public\\index.html
 
-test website:
-  stage: dont run
-  script:
-    - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
-    - SET NODE_TLS_REJECT_UNAUTHORIZED=0
-    - call npm config set strict-ssl=false
-    - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
-    - call npm install
-    - call npm install -g gatsby-cli
-    - START /B "" gatsby serve --port 9001 
-    - sleep 30
-    - curl "http://localhost:9001" | tac | tac | grep -q "Gatsby"
+# test website:
+#  stage: test
+#  script:
+#    - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
+#    - SET NODE_TLS_REJECT_UNAUTHORIZED=0
+#    - call npm config set strict-ssl=false
+#    - call npm config set cafile C:\Trainings\zScalerRootCertificate.cer
+#    - call npm install
+#    - call npm install -g gatsby-cli
+#    - START /B "" gatsby serve --port 9001 
+#    - sleep 30
+#    - curl "http://localhost:9001" | tac | tac | grep -q "Gatsby"
 
 deploy to surge:
   stage: deploy
