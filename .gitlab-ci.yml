@@ -33,5 +33,5 @@ test website:
     - call npm install
     - call npm install -g gatsby-cli
     - START /B "" gatsby serve --port 9001 
-    - sleep 10
+    - sleep 30
     - curl "http://localhost:9001" | tac | tac | grep -q "Gatsby"
