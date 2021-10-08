@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 build website:
   stage: build
@@ -24,7 +25,7 @@ test artifact:
     - grep -q "Gatsby" .\\public\\index.html
 
 test website:
-  stage: test
+  stage: dont run
   script:
     - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
     - SET NODE_TLS_REJECT_UNAUTHORIZED=0
@@ -35,3 +36,9 @@ test website:
     - START /B "" gatsby serve --port 9001 
     - sleep 30
     - curl "http://localhost:9001" | tac | tac | grep -q "Gatsby"
+
+deploy to surge:
+  stage: deploy
+  script:
+    - call npm install --global surge
+    - surge --project ./public --domain sweet-answer.surge.sh
