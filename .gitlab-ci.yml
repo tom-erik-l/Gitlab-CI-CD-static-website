@@ -20,7 +20,7 @@ build website:
     - call npm install -g gatsby-cli
     - call gatsby build
     - ls
-    - echo "sed -i 's/%%VERSION%%/%CI_COMMIT_SHORT_SHA%/' .\\public\\index.html"
+    - echo "sed -i 's/%%%%VERSION%%%%/%CI_COMMIT_SHORT_SHA%/' .\\public\\index.html"
     - sed -i 's/%%VERSION%%/%CI_COMMIT_SHORT_SHA%/' .\\public\\index.html
 
 
