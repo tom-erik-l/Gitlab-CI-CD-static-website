@@ -23,7 +23,6 @@ build website:
     - echo "sed -i 's/%%%%VERSION%%%%/%CI_COMMIT_SHORT_SHA%/' .\\public\\index.html"
     - sed -i 's/%%VERSION%%/%CI_COMMIT_SHORT_SHA%/' .\\public\\index.html
 
-
   artifacts:
     paths:
       - ".\\public"
@@ -31,6 +30,7 @@ build website:
 
 test artifact:
   stage: test 
+  cache: {}
   script:
     - grep -q "Gatsby" .\\public\\index.html
 
@@ -49,6 +49,7 @@ test artifact:
 
 deploy to surge:
   stage: deploy
+  cache: {}
   script:
     - call npm install --global surge
     - surge --project ./public --domain sweet-answer.surge.sh
