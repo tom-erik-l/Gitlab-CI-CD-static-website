@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy review
   - deploy staging
   - deploy production
   - production tests
@@ -53,6 +54,16 @@ test artifact:
 #    - sleep 30
 #    - curl "http://localhost:9001" | tac | tac | grep -q "Gatsby"
 
+deploy review:
+  stage: deploy review
+  environment: 
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
+  only:
+  - merge_requests
+  script:
+    - call npm install --global surge
+    - surge --project ./public --domain sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
 
 deploy staging:
   stage: deploy staging
