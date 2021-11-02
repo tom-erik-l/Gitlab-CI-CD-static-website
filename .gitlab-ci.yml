@@ -17,6 +17,9 @@ variables:
 
 build website:
   stage: build
+  only:
+    - master
+    - merge_requests
   script: 
     - SET NODE_EXTRA_CA_CERTS=C:\Trainings\zScalerRootCertificate.cer
     - SET NODE_TLS_REJECT_UNAUTHORIZED=0
@@ -37,6 +40,9 @@ build website:
 
 test artifact:
   stage: test 
+  only:
+  - master
+  - merge_requests
   cache: {}
   script:
     - grep -q "Gatsby" .\\public\\index.html
