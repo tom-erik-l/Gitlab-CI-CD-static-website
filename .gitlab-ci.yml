@@ -60,6 +60,8 @@ deploy staging:
     name: staging
     url: http://$STAGING_DOMAIN
   cache: {}
+  only:
+    - master
   script:
     - call npm install --global surge
     - surge --project ./public --domain $STAGING_DOMAIN
@@ -72,6 +74,8 @@ deploy production:
   # when: manual
   # allow_failure: false
   cache: {}
+  only:
+  - master
   script:
     - call npm install --global surge
     - surge --project ./public --domain $PRODUCTION_DOMAIN
@@ -79,6 +83,8 @@ deploy production:
 production tests:
   stage: production tests
   cache: {}
+  only:
+  - master
   script:
     - curl "$PRODUCTION_DOMAIN" | grep -q "Hi people"
     - curl "$PRODUCTION_DOMAIN" | grep -q "%CI_COMMIT_SHORT_SHA%"
