@@ -10,6 +10,10 @@ cache:
   paths:
     - ".\\node_modules"
 
+variables:
+  STAGING_DOMAIN: sweet-answer-staging.surge.sh
+  PRODUCTION_DOMAIN: sweet-answer.surge.sh
+
 build website:
   stage: build
   script: 
@@ -54,25 +58,25 @@ deploy staging:
   stage: deploy staging
   environment:
     name: staging
-    url: http://sweet-answer-staging.surge.sh
+    url: http://$STAGING_DOMAIN
   cache: {}
   script:
     - call npm install --global surge
-    - surge --project ./public --domain sweet-answer-staging.surge.sh
+    - surge --project ./public --domain $STAGING_DOMAIN
 
 deploy production:
   stage: deploy production
   environment:
     name: production
-    url: http://sweet-answer.surge.sh
+    url: http://$PRODUCTION_DOMAIN
   cache: {}
   script:
     - call npm install --global surge
-    - surge --project ./public --domain sweet-answer.surge.sh
+    - surge --project ./public --domain $PRODUCTION_DOMAIN
 
 production tests:
   stage: production tests
   cache: {}
   script:
-    - curl "sweet-answer.surge.sh" | grep -q "Hi people"
-    - curl "sweet-answer.surge.sh" | grep -q "%CI_COMMIT_SHORT_SHA%"
+    - curl "$PRODUCTION_DOMAIN" | grep -q "Hi people"
+    - curl "$PRODUCTION_DOMAIN" | grep -q "%CI_COMMIT_SHORT_SHA%"
