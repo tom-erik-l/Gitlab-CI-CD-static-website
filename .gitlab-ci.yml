@@ -70,21 +70,22 @@ deploy review:
   - merge_requests
   script:
     - call npm install --global surge
-    - surge --project ./public --domain sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
+    - surge --project ./public --domain sweet-answer-%CI_ENVIRONMENT_SLUG%.surge.sh
 
 stop review:
   stage: deploy review
   only:
     - merge_requests
-  variables:
-    GIT_STRATEGY: none
-  script:
-  - call npm install --global surge
-  - surge teardown sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
   environment: 
     name: review/$CI_COMMIT_REF_NAME
     action: stop
   when: manual
+  variables:
+    GIT_STRATEGY: none
+  script:
+  - call npm install --global surge
+  - surge teardown sweet-answer-%CI_ENVIRONMENT_SLUG%.surge.sh
+
 
 deploy staging:
   stage: deploy staging
@@ -96,7 +97,7 @@ deploy staging:
     - master
   script:
     - call npm install --global surge
-    - surge --project ./public --domain $STAGING_DOMAIN
+    - surge --project ./public --domain %STAGING_DOMAIN%
 
 deploy production:
   stage: deploy production
@@ -110,7 +111,7 @@ deploy production:
   - master
   script:
     - call npm install --global surge
-    - surge --project ./public --domain $PRODUCTION_DOMAIN
+    - surge --project ./public --domain %PRODUCTION_DOMAIN%
 
 production tests:
   stage: production tests
@@ -118,5 +119,5 @@ production tests:
   only:
   - master
   script:
-    - curl "$PRODUCTION_DOMAIN" | grep -q "Hi people"
-    - curl "$PRODUCTION_DOMAIN" | grep -q "%CI_COMMIT_SHORT_SHA%"
+    - curl "%PRODUCTION_DOMAIN%" | grep -q "Hi people"
+    - curl "%PRODUCTION_DOMAIN%" | grep -q "%CI_COMMIT_SHORT_SHA%"
