@@ -65,11 +65,26 @@ deploy review:
   environment: 
     name: review/$CI_COMMIT_REF_NAME
     url: https://sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
+    on_stop: stop review
   only:
   - merge_requests
   script:
     - call npm install --global surge
     - surge --project ./public --domain sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
+
+stop review:
+  stage: deploy review
+  only:
+    - merge_requests
+  variables:
+    GIT_STRATEGY: none
+  script:
+  - call npm install --global surge
+  - surge teardown sweet-answer-$CI_ENVIRONMENT_SLUG.surge.sh
+  environment: 
+    name: review/$CI_COMMIT_REF_NAME
+    action: stop
+  when: manual
 
 deploy staging:
   stage: deploy staging
