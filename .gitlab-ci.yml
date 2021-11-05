@@ -86,32 +86,34 @@ stop review:
   - call npm install --global surge
   - surge teardown sweet-answer-%CI_ENVIRONMENT_SLUG%.surge.sh
 
-
-deploy staging:
-  stage: deploy staging
-  environment:
-    name: staging
-    url: http://$STAGING_DOMAIN
-  cache: {}
+.deploy_template: &deploy
   only:
     - master
+  environment:
+    url: http://DOMAIN
+  cache: {}
   script:
     - call npm install --global surge
-    - surge --project ./public --domain %STAGING_DOMAIN%
+    - surge --project ./public --domain %DOMAIN%
+
+deploy staging:
+  <<: *deploy
+  stage: deploy staging
+  variables:
+    DOMAIN: $STAGING_DOMAIN
+  environment:
+    name: staging
+
 
 deploy production:
+  <<: *deploy
   stage: deploy production
+  variables:
+    DOMAIN: $PRODUCTION_DOMAIN
   environment:
     name: production
-    url: http://$PRODUCTION_DOMAIN
   # when: manual
   # allow_failure: false
-  cache: {}
-  only:
-  - master
-  script:
-    - call npm install --global surge
-    - surge --project ./public --domain %PRODUCTION_DOMAIN%
 
 production tests:
   stage: production tests
